@@ -1,6 +1,6 @@
 {
-  "name": "wt_balancing",
-  "version": "1.0.0",
+  "name": "tbal",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
