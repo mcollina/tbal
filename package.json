@@ -2,12 +2,18 @@
   "name": "tbal",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "tbal.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Matteo Collina <hello@matteocollina.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "borp": "^0.9.1",
+    "snazzy": "^9.0.0",
+    "standard": "^17.1.0",
+    "undici": "^6.7.0"
+  }
 }
