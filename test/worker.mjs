@@ -1,5 +1,5 @@
 import tbal from '../tbal.js'
-import { parentPort, threadId } from 'node:worker_threads'
+import { parentPort } from 'node:worker_threads'
 
 const server = await tbal.worker(parentPort)
 

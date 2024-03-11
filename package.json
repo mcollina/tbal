@@ -5,7 +5,7 @@
   "main": "tbal.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard | snazzy && borp"
   },
   "keywords": [],
   "author": "Matteo Collina <hello@matteocollina.com>",

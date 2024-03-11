@@ -1,12 +1,9 @@
 'use strict'
 
 const http = require('node:http')
-const net = require('node:net')
 const { parentPort } = require('node:worker_threads')
 const { on } = require('node:events')
-const { setImmediate: immediate, setTimeout: sleep } = require('node:timers/promises')
-const assert = require('node:assert/strict')
- 
+
 async function main (opts) {
   const port = opts.port || 0
   const address = opts.address || '127.0.0.1'
@@ -29,7 +26,7 @@ async function main (opts) {
         })
       }
       let resolve
-      const p = new Promise((_resolve) => resolve = _resolve)
+      const p = new Promise((_resolve) => { resolve = _resolve })
       const listener = (message) => {
         if (message.command === 'tbal:listening') {
           fd = message.fd
@@ -41,11 +38,11 @@ async function main (opts) {
       worker.on('message', listener)
       return p
     },
-  
-    close () { 
-      return new Promise((resolve) => server.close(resolve))
+
+    close () {
+
     },
-  
+
     address () {
       return _address
     }

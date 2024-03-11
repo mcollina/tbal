@@ -6,8 +6,6 @@ const { Worker } = require('node:worker_threads')
 const tbal = require('../')
 const { join } = require('node:path')
 const { request } = require('undici')
-const { on } = require('node:events')
-const { setTimeout: sleep } = require('node:timers/promises')
 
 test('spawn 2 threads', async (t) => {
   const control = await tbal.main({
@@ -28,7 +26,7 @@ test('spawn 2 threads', async (t) => {
   await control.add(worker1)
   await control.add(worker2)
 
-  let promises = []
+  const promises = []
   for (let i = 0; i < 100; i++) {
     promises.push((async () => {
       const url = `http://127.0.0.1:${control.address().port}?i=${i}`

@@ -1,7 +1,5 @@
 import { Worker } from 'node:worker_threads'
 import { join } from 'node:path'
-import { createServer } from 'node:net'
-import once from 'node:events'
 import { main } from '../tbal.js'
 
 const control = await main({
