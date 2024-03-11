@@ -11,7 +11,7 @@
   "author": "Matteo Collina <hello@matteocollina.com>",
   "license": "MIT",
   "devDependencies": {
-    "borp": "^0.9.1",
+    "borp": "^0.10.0",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
     "undici": "^6.7.0"
