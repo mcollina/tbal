@@ -1,30 +1,19 @@
 'use strict'
 
-const http = require('node:http')
 const { parentPort } = require('node:worker_threads')
 const { on } = require('node:events')
 
 async function main (opts) {
-  const port = opts.port || 0
-  const address = opts.address || '127.0.0.1'
-
   let fd
   let _address
 
   return {
     add (worker) {
-      if (fd) {
-        worker.postMessage({
-          command: 'tbal:start',
-          fd
-        })
-      } else {
-        worker.postMessage({
-          command: 'tbal:start',
-          port,
-          address
-        })
-      }
+      worker.postMessage({
+        command: 'tbal:start',
+        fd,
+        address: _address,
+      })
       let resolve
       const p = new Promise((_resolve) => { resolve = _resolve })
       const listener = (message) => {
@@ -49,26 +38,33 @@ async function main (opts) {
   }
 }
 
-async function worker () {
-  let port
-  let address
+async function listen (server, { port, address }) {
   let fd
   for await (const [message] of on(parentPort, 'message')) {
     if (message.command === 'tbal:start') {
-      port = message.port
-      address = message.address
       fd = message.fd
+      if (message.address) {
+        if (port !== 0 && message.address.port !== port) {
+          throw new Error('Port mismatch')
+        }
+        if (address && message.address?.address !== address) {
+          throw new Error('Address mismatch')
+        }
+      }
       break
     }
   }
 
-  const server = http.createServer()
+  const listenObj = {}
 
-  server.listen({
-    fd,
-    port,
-    address
-  })
+  if (fd) {
+    listenObj.fd = fd
+  } else {
+    listenObj.port = port
+    listenObj.address = address
+  }
+
+  server.listen(listenObj)
 
   await new Promise((resolve) => server.on('listening', resolve))
   parentPort.postMessage({
@@ -80,4 +76,4 @@ async function worker () {
 }
 
 module.exports.main = main
-module.exports.worker = worker
+module.exports.listen = listen

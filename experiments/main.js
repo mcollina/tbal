@@ -2,9 +2,7 @@ import { Worker } from 'node:worker_threads'
 import { join } from 'node:path'
 import { main } from '../tbal.js'
 
-const control = await main({
-  port: 3000
-})
+const control = await main()
 
 for (let i = 0; i < 4; i++) {
   const worker = new Worker(join(import.meta.dirname, 'worker.js'))
